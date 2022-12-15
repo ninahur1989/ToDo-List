@@ -1,0 +1,67 @@
+﻿@model List<ToDoTask>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="row">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    @await Html.PartialAsync("_AddTask.cshtml", "3232" )
+                </li>
+            </ul>
+            <div class="col-md-8 offset-2">
+                @{
+                    int i = 1;
+                    @foreach (var item in Model)
+                    {
+                        if (item.Actuality == TodoList.Data.Enums.TaskActuality.Archived)
+                        {
+                            <div>
+                                <h6 style="background-color:orangered">Archived</h6>
+                                <span style="background-color:aliceblue"> Index</span>
+                                <span>@i</span>
+                                <span style="background-color:cornsilk"> Description</span>
+                                <span> @item.Description</span>
+                                <span style="background-color:moccasin"> Status</span>
+                                <span> @item.Status</span>
+                                @{
+                                    i = i + 1;
+                                }
+                                <a asp-action="Archive" asp-route-id="@item.Id"> Unarchive</a>
+                                @if (@item.Status == TodoList.Data.Enums.TaskStatus.None)
+                                {
+                                    <a asp-action="EditStatus" asp-route-id="@item.Id"> Complete</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="EditStatus" asp-route-id="@item.Id"> UnComplete</a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <span style="background-color:aliceblue"> Index</span>
+                                <span>@i</span>
+                                <span style="background-color:cornsilk"> Description</span>
+                                <span> @item.Description</span>
+                                <span style="background-color:moccasin"> Status</span>
+                                <span> @item.Status</span>
+                                @{
+                                    i = i + 1;
+                                }
+                            </div>
+                            <a asp-action="Archive" asp-route-id="@item.Id"> Archive</a>
+                            @if (@item.Status == TodoList.Data.Enums.TaskStatus.None)
+                            {
+                                <a asp-action="EditStatus" asp-route-id="@item.Id"> Complete</a>
+                            }
+                            else
+                            {
+                                <a asp-action="EditStatus" asp-route-id="@item.Id"> UnComplete</a>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
